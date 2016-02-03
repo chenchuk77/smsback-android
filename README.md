@@ -1,11 +1,7 @@
 # smsback-android
-#
-# developed by chen alkabets chenchuk@gmail.com
-# 
-#
 
 SmsBack is a utility to respond to incoming SMS.
-
+developed by chen alkabets chenchuk@gmail.com
 
 1. System logic
 ---------------
