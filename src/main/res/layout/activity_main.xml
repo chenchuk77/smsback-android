@@ -1,105 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    tools:context="com.example.chen.mysms.MainActivity">
-<!--    android:background="@drawable/blue_and_red"
--->
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    tools:context="${packageName}.${activityClass}" >
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Refresh rules"
-                android:id="@+id/btnRefresh" />
+    <!--<TextView-->
+        <!--android:id="@+id/tvHeader"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Active Rules :"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:textSize="20dp"-->
+        <!--android:padding="10dp"/>-->
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Default rules"
-                android:id="@+id/btnDefault" />
+    <Button
+        android:text="Console"
+        android:id="@+id/btnConsole"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/imageButton"
+        android:background="@drawable/button_shape"
+        android:textColor="#000"
+        android:layout_margin="3dp"
+        android:textStyle="bold"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log"
-                android:id="@+id/btnLog" />
-        </TableRow>
+    <Button
+        android:text="del logfile"
+        android:id="@+id/btnDelete"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageButton"
+        android:background="@drawable/button_shape"
+        android:textColor="#000"
+        android:layout_margin="3dp"
+        android:textStyle="bold"/>
+        <!--android:layout_alignRight="@+id/lvRules"-->
 
+    <Button
+        android:text="Email Log"
+        android:id="@+id/btnSendEmail"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnDelete"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/imageButton"
+        android:background="@drawable/button_shape"
+        android:textColor="#000"
+        android:layout_margin="3dp"
+        android:textStyle="bold"/>
+    <!--android:layout_alignBottom="@+id/btnExec"-->
 
-    <!--<ScrollView
+    <Button
+        android:text="Refresh rules"
+        android:id="@+id/btnRefresh"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnDelete"
+        android:background="@drawable/button_shape"
+        android:textColor="#000"
+        android:layout_margin="3dp"
+        android:textStyle="bold"/>
+    <!--android:layout_alignBottom="@+id/btnExec"-->
+
+    <Button
+        android:text="View log"
+        android:id="@+id/btnLog"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSendEmail"
+        android:background="@drawable/button_shape"
+        android:layout_alignParentRight="true"
+        android:textColor="#000"
+        android:layout_margin="3dp"
+        android:textStyle="bold"/>
+    <!--android:layout_alignBottom="@+id/btnExec"-->
+
+    <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="match_parent"> -->
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/smsback_main2"
+        android:id="@+id/imageButton" />
 
-        <!--<EditText
-            android:layout_width='match_parent'
-            android:layout_height="wrap_content"
-            android:id="@+id/etCommand"
-            android:text= 'rule:{"addTimestamp":"+","matchAddress":"0541112233","matchContent":"-","priority":2,"replaceContent":"-","replyTo":"0541112233"}' />-->
-        <!--</ScrollView>-->
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="del logfile"
-                android:id="@+id/btnDelete" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Send log by mail"
-                android:id="@+id/btnSendEmail" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Console"
-                android:id="@+id/btnConsole" />
-
-        </TableRow>
 
     <ListView
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/btnRefresh"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
         android:id="@+id/lvRules"
         android:divider="@null"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:gravity="center_vertical"
-        android:background="@color/colorRulesList"
-
         android:dividerHeight="10dp"/>
     <!--android:background="@drawable/listviewstyle"-->
+    <!--android:layout_below="@+id/tvHeader"-->
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+</RelativeLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Undeploy"
-            android:id="@+id/btnUnDeploy" />
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Send log by mail"-->
-            <!--android:id="@+id/btnSendEmail" />-->
-
-    </TableRow>
-
-</LinearLayout>
+    <!--android:text="Default rules"-->
+    <!--android:id="@+id/btnDefault" />-->
+    <!--android:text="Refresh rules"-->
+    <!--android:id="@+id/btnRefresh" />-->
+    <!--android:text="Log"-->
+    <!--android:id="@+id/btnLog" />-->

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private static final Logger logger = LoggerFactory.getLogger(MainActivity.class);
            // logger.debug("Some log message. Details: {}", someObject.toString());
 
-    private ArrayAdapter<String> adapter;
+    private RulesArrayAdapter<String> adapter;
+    //private ArrayAdapter<String> adapter;
     //
     private SmsListener listener;
     // map of rules by priority
@@ -103,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init();
-
+        // disable keyboard on startapp
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Button btn_refresh = (Button) findViewById(R.id.btnRefresh);
         btn_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,30 +186,21 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0 ; i<rulesArray.length ; i++){
             deployedRulesAsStrings[i] = rulesArray[i].toString();
         }
-        adapter = new ArrayAdapter<String>(this,
-                     android.R.layout.simple_list_item_1, deployedRulesAsStrings);
+//        adapter = new ArrayAdapter<String>(this,
+//                     android.R.layout.simple_list_item_1, deployedRulesAsStrings);
+
+        adapter = new RulesArrayAdapter<String>(this,deployedRulesAsStrings);
+
         // attach adapter to listview
         final ListView lvRules = (ListView) findViewById(R.id.lvRules);
         lvRules.setAdapter(adapter);
-        //lvRules.setBackgroundColor(Color.parseColor("#fff4e2"));
         lvRules.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent ruleEditorIntent = new Intent(MainActivity.this, RuleEditorActivity.class);
-
-                //
                 String jsonRule = (String) lvRules.getItemAtPosition(position);
                 Rule selectedRule = new Rule(jsonRule);
-
                 ruleEditorIntent.putExtra("SELECTED_JSON_RULE", jsonRule);
-
-//                ruleEditorIntent.putExtra("SELECTED_RULE_PRIORITY", selectedRule.getPriority());
-//                ruleEditorIntent.putExtra("SELECTED_RULE_MATCH_ADDRESS", selectedRule.getMatchAddress());
-//                ruleEditorIntent.putExtra("SELECTED_RULE_MATCH_CONTENT", selectedRule.getMatchContent());
-//                ruleEditorIntent.putExtra("SELECTED_RULE_REPLY_TO", selectedRule.getReplyTo());
-//                ruleEditorIntent.putExtra("SELECTED_RULE_ADD_TIMESTAMP", selectedRule.getAddTimestamp());
-//                ruleEditorIntent.putExtra("SELECTED_RULE_REPLACE_CONTENT", selectedRule.getReplaceContent());
-
                 startActivity(ruleEditorIntent);
             }
         });

@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorRulesList">#99dd44</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="ruleDescBg">#dd4081</color>
+    <color name="ruleDescFg">#dddddd</color>
+
+
 </resources>

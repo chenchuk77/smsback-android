@@ -137,12 +137,14 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
             android:text="Save rule"
             android:id="@+id/btnSave" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
             android:text="Delete rule"
             android:id="@+id/btnDelete" />
 

@@ -30,7 +30,7 @@ public class CommandConsoleActivity extends AppCompatActivity {
                 // faking an sms to pass for execution
                 SimpleSms simulatedSms = new SimpleSms();
                 simulatedSms.setContent(command);
-                simulatedSms.setRecipientAddress("000000");
+                simulatedSms.setSenderAddress("000");
                 service.execCommand(new SimpleSms().setContent(command));
                 //refreshRulesListView();
                 Toast.makeText(v.getContext(), "Done.", Toast.LENGTH_LONG).show();
