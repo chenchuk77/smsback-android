@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import net.kukinet.smsback.core.RulesService;
 import net.kukinet.smsback.logger.Log;
@@ -132,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Logger.deleteLogfile();
+                Toast.makeText(MainActivity.this, "Logfile deleted.",Toast.LENGTH_LONG).show();
                 Log.e(this.getClass().getSimpleName(), "logfile deleted.");
 
             }
@@ -204,44 +206,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(ruleEditorIntent);
             }
         });
+        Toast.makeText(MainActivity.this, "Rules refreshed.",Toast.LENGTH_LONG).show();
+
     }
-
-    /*  public void readAllInbox() {
-
-        TextView lblMsg, lblNo;
-
-        ListView lvInbox = (ListView) findViewById(R.id.lvInbox);
-        SimpleCursorAdapter adapter;
-
-        // Create Inbox box URI
-        Uri inboxURI = Uri.parse("content://sms/inbox");
-
-        // List required columns
-        String[] reqCols = new String[]{"_id", "address", "body", "date", "status", "type"};
-
-        // Get Content Resolver object, which will deal with Content Provider
-        ContentResolver cr = getContentResolver();
-
-        // Fetch Inbox SMS Message from Built-in Content Provider
-        Cursor c = cr.query(inboxURI, reqCols, null, null, null);
-        adapter = new SimpleCursorAdapter(this, R.layout.sms_content, c, new String[]{"address", "date", "body"}, new int[]{R.id.tvAddress, R.id.tvDate, R.id.tvMessage});
-        lvInbox.setAdapter(adapter);
-    }
-
-    private void displaySmsLog() {
-        Uri allMessages = Uri.parse("content://sms/");
-        //Cursor cursor = managedQuery(allMessages, null, null, null, null); Both are same
-        Cursor cursor = this.getContentResolver().query(allMessages, null, null, null, null);
-
-        while (cursor.moveToNext()) {
-            for (int i = 0; i < cursor.getColumnCount(); i++) {
-                Log.d(cursor.getColumnName(i) + "", cursor.getString(i) + "");
-            }
-            Log.d("One row finished",
-                    "**************************************************");
-        }
-
-    }*/
 }
 /*
 *
