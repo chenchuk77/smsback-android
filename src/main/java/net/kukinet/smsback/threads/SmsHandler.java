@@ -2,6 +2,7 @@ package net.kukinet.smsback.threads;
 
 import android.telephony.SmsManager;
 
+import net.kukinet.smsback.core.RulesService;
 import net.kukinet.smsback.core.SimpleSms;
 import net.kukinet.smsback.logger.Log;
 import net.kukinet.smsback.rules.Rule;
@@ -39,6 +40,7 @@ public class SmsHandler implements  Runnable{
             Log.e(this.getClass().getSimpleName(), "checking sms agains rule priority:" + rule.getPriority());
             if (rule.isMatch(simpleSms)){
                 Log.e(this.getClass().getSimpleName(), "rule match !");
+                RulesService.getInstance().increaseCounterMatchedSms();
                 // allow rule to generate reply
                 SimpleSms simpleSmsReply = rule.createSmsReply(simpleSms);
                 Log.e(this.getClass().getSimpleName(), "reply message created.");
@@ -47,6 +49,7 @@ public class SmsHandler implements  Runnable{
                 return;
             }else {
                 Log.e(this.getClass().getSimpleName(), "rule doesnt match, continue to next rule by priority.");
+                RulesService.getInstance().increaseCounterUnMatchedSms();
             }
         }
         Log.e(this.getClass().getSimpleName(), "all " + rules.size() + " rules didnt match, nothing todo, handler done.");

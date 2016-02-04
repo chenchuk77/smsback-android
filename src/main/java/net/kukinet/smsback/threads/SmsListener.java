@@ -62,6 +62,7 @@ public class SmsListener extends BroadcastReceiver{
                 if (incomingSms.getDisplayMessageBody() == null && incomingSms.getUserData().length == 140) {
                     Log.e(this.getClass().getSimpleName(), "incoming binary sms.");
                     binarySms = true;
+                    RulesService.getInstance().increaseCounterBinarySms();
                     // converting binary to text sms with "BINARY" as content
                     //simpleSms.setSenderAddress(incomingSms.getOriginatingAddress());
                     //simpleSms.setTimestamp(incomingSms.getTimestampMillis());
@@ -70,6 +71,7 @@ public class SmsListener extends BroadcastReceiver{
                 } else if(incomingSms.getMessageBody().toLowerCase().startsWith("cmd:")){
                     // must make sure its not binary sms, before parsing content command sms
                     Log.e(this.getClass().getSimpleName(), "incoming sms command, sending for execution.");
+                    RulesService.getInstance().increaseCounterCmdSms();
 
                     // converting command sms to simpleSms
                     SimpleSms simpleSms = new SimpleSms();;

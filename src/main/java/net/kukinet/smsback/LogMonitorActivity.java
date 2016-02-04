@@ -14,8 +14,8 @@ import java.io.IOException;
 
 public class LogMonitorActivity extends AppCompatActivity {
 
-    public static final String LOG_FILENAME = "log.log";
-    public static final String LOG_DIRECTORY= "mysms";
+    public static final String LOG_FILENAME = "log.txt";
+    public static final String LOG_DIRECTORY= "smsback";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

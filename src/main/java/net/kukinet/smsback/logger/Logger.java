@@ -10,8 +10,8 @@ import java.io.IOException;
  */
 public class Logger {
 
-    public static final String LOG_FILENAME = "log.log";
-    public static final String LOG_DIRECTORY= "mysms";
+    public static final String LOG_FILENAME = "log.txt";
+    public static final String LOG_DIRECTORY= "smsback";
 
     public static final Logger instance = new Logger();
 

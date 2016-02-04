@@ -27,6 +27,10 @@ import java.util.TreeMap;
 
 public class RulesService {
 
+    private static int counterMatchedSms = 0;
+    private static int counterUnMatchedSms = 0;
+    private static int counterCmdSms= 0;
+    private static int counterBinarySms= 0;
     //List<Operator> operators = null;
 
     // need to access shared-prefs
@@ -40,6 +44,16 @@ public class RulesService {
 
     public Map<Integer, Rule> getRules() {return rules;}
     public void setRules(Map<Integer, Rule> rules) {this.rules = rules;}
+
+    public int getCounterMatchedSms() {return counterMatchedSms;}
+    public void increaseCounterMatchedSms(){counterMatchedSms++;}
+    public int getCounterUnMatchedSms() {return counterUnMatchedSms;}
+    public void increaseCounterUnMatchedSms(){counterUnMatchedSms++;}
+    public int getCounterCmdSms() {return counterCmdSms;}
+    public void increaseCounterCmdSms(){counterCmdSms++;}
+    public int getCounterBinarySms() {return counterBinarySms;}
+    public void increaseCounterBinarySms(){counterBinarySms++;}
+
     //public List<Operator> getOperators() { return operators;}
     //public void setOperators(List<Operator> operators) {this.operators = operators;}
 

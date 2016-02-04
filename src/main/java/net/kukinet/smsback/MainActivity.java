@@ -34,8 +34,8 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String LOG_FILENAME = "log.log";
-    public static final String LOG_DIRECTORY= "mysms";
+    public static final String LOG_FILENAME = "log.txt";
+    public static final String LOG_DIRECTORY= "smsback";
     public static final String[] MANAGERS = {"chenchuk@gmail.com", "chen.alkabets@nova-lumos.com"};
 
 
