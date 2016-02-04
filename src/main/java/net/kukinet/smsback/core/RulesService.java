@@ -156,7 +156,7 @@ public class RulesService {
         String smsContent = sms.getContent();
         if (smsContent.toLowerCase().startsWith("cmd:")){
             String cmdString = smsContent.substring(4);
-            // cmd:rule:{........}
+            // cmd:add:{........}
             // command to add/replace a rule
             if (cmdString.toLowerCase().startsWith("add:")){
                 Log.e(this.getClass().getSimpleName(), "exec command to add/replace rule.");
@@ -175,7 +175,7 @@ public class RulesService {
             // command to get rule 43
             if (cmdString.toLowerCase().startsWith("get:")){
                 Integer ruleId = Integer.parseInt(cmdString.substring(4));
-                Log.e(this.getClass().getSimpleName(), "exec command get rule id: "+ruleId);
+                Log.e(this.getClass().getSimpleName(), "exec command get rule id: "+ruleId + ".");
                 SimpleSms ruleReply = new SimpleSms();
                 ruleReply.setRecipientAddress(sms.getSenderAddress());
                 if (RulesService.getInstance().getRules().containsKey(ruleId)){
@@ -192,8 +192,8 @@ public class RulesService {
             // cmd:remove:43
             // command to remove rule 43
             if (cmdString.toLowerCase().startsWith("remove:")){
-                Log.e(this.getClass().getSimpleName(), "exec command get template.");
                 Integer ruleId = Integer.parseInt(cmdString.substring(7));
+                Log.e(this.getClass().getSimpleName(), "exec command to remove rule id: " + ruleId + ".");
                 SimpleSms ruleRemoveReply = new SimpleSms();
                 ruleRemoveReply.setRecipientAddress(sms.getSenderAddress());
                 if (RulesService.getInstance().getRules().containsKey(ruleId)){
@@ -281,6 +281,13 @@ public class RulesService {
         Log.e(getClass().getSimpleName(), "rules map deployed. total : " + rules.size() + " rules.");
     }
     public void sendSMS(SimpleSms simpleSms){
+
+        // if source of the sms is "000" it means that the command arrived from console
+        // there is no need to reply, logging is enough.
+        if (simpleSms.getRecipientAddress().equals("000")){
+            Log.e(this.getClass().getSimpleName(), "reply to console command : " + simpleSms.toString());
+            return;
+        }
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(simpleSms.getRecipientAddress(), null, simpleSms.getContent(), null, null);
         Log.e(this.getClass().getSimpleName(), "sms sent: " + simpleSms.toString());

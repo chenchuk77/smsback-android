@@ -31,7 +31,10 @@ public class CommandConsoleActivity extends AppCompatActivity {
                 SimpleSms simulatedSms = new SimpleSms();
                 simulatedSms.setContent(command);
                 simulatedSms.setSenderAddress("000");
-                service.execCommand(new SimpleSms().setContent(command));
+
+                Log.e(this.getClass().getSimpleName(), simulatedSms.toString());
+                // BUG : service.execCommand(new SimpleSms().setContent(command));
+                service.execCommand(simulatedSms);
                 //refreshRulesListView();
                 Toast.makeText(v.getContext(), "Done.", Toast.LENGTH_LONG).show();
                 Log.e(this.getClass().getSimpleName(), "rules deployd: " + service.getRules().toString());

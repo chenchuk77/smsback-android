@@ -52,7 +52,7 @@ public class Rule {
         String contentToSend = (shouldSendSameContent ? "the same content ": "'" +replaceContent +"' ") ;
         desc += contentToSend;
         desc += (shouldAddTimestamp) ? "with timestamp ": "";
-        desc += "to '" + replyTo + "'.";
+        desc += "to " + replyTo + ".";
         return desc;
     }
 
