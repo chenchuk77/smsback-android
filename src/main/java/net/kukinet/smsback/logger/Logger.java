@@ -57,7 +57,7 @@ public class Logger {
 
     private void logMessage(String message){
         //android.util.Log.e("chenchuk","message");
-        //Log.e("xxxxxxxx", message);
+        //Log.e("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", message);
         appendToFile( android.text.format.DateFormat.format("yyyy-MM-dd hh:mm:ss", new java.util.Date()) + ":" + message);
     }
 

@@ -6,10 +6,12 @@ import android.telephony.SmsManager;
 //import android.util.Log;
 
 import com.google.gson.Gson;
+//import android.util.Log;
 
 import net.kukinet.smsback.logger.Log;
 import net.kukinet.smsback.rules.Rule;
 import net.kukinet.smsback.rules.RuleBuilder;
+import net.kukinet.smsback.threads.SmsListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,8 @@ public class RulesService {
     private static int counterCmdSms= 0;
     private static int counterBinarySms= 0;
 
-    private Boolean enabled = true;
+    private Boolean enabled;
+    private SmsListener listener;
 
     // need to access shared-prefs
     private Context context;
@@ -55,12 +58,25 @@ public class RulesService {
     public int getCounterBinarySms() {return counterBinarySms;}
     public void increaseCounterBinarySms(){counterBinarySms++;}
 
-    public void enableService(){
+
+    // creates SmsListener with that Map of rules
+    //Log.e(getClass().getSimpleName(), "starting sms listener with : " + rules.size() + " deployed rules.");
+
+
+    // should kill the listener !
+    public void startService(){
         this.enabled = true;
-        Log.e(getClass().getSimpleName(), "service status changed to enabled.");
+        if(rules!=null) {
+            this.listener = new SmsListener();
+            this.listener.setRules(rules);
+            this.listener.setContext(context);
+            Log.e(getClass().getSimpleName(), "service status changed to enabled.");
+        } else  {
+            Log.e(getClass().getSimpleName(), "cannot start service, no rules..");
+        }
 
     }
-    public void disableService(){
+    public void stopService(){
         this.enabled = false;
         Log.e(getClass().getSimpleName(), "service status changed to disabled.");
     }
@@ -78,7 +94,8 @@ public class RulesService {
 
     // singleton, private c'tor
     private RulesService(){
-        Log.e(getClass().getSimpleName(), "private ctor called , service singleton initialized.");
+        this.enabled = false;
+        Log.e(getClass().getSimpleName(), "rules service initialized.");
         //operators = new ArrayList<Operator>();
     }
 

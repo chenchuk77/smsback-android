@@ -17,13 +17,15 @@ import java.util.Map;
 
 //
 // bypass android Log
-// import android.util.Log;
+ //import android.util.Log;
 
 public class SmsListener extends BroadcastReceiver{
 
     public static final String BINARY_KEYWORD = "BINARY";
     private static int counter = 0;
 
+
+    private Context context;
     private Map<Integer, Rule> rules;
     private SharedPreferences preferences;
     private boolean binarySms = false;
@@ -36,6 +38,10 @@ public class SmsListener extends BroadcastReceiver{
     public void setRules(Map<Integer, Rule> rules){
         this.rules = rules;
         Log.e(this.getClass().getSimpleName(),rules.size() + " rules deployed.");
+    }
+    public void setContext(Context context){
+        Log.e(this.getClass().getSimpleName(), "setting context for this listener ??? maybe not necessery.");
+        this.context=context;
     }
 
     @Override

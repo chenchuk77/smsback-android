@@ -42,55 +42,29 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static final Logger logger = LoggerFactory.getLogger(MainActivity.class);
-           // logger.debug("Some log message. Details: {}", someObject.toString());
+    // logger.debug("Some log message. Details: {}", someObject.toString());
 
     private RulesArrayAdapter<String> adapter;
-    //private ArrayAdapter<String> adapter;
-    //
-    private SmsListener listener;
     // map of rules by priority
     public Map<Integer, Rule> rules;
     public RulesService service;
 
     public void init() {
-
-        // logging will be in that format for slf4j, although
-        // the current impl is a simple logger that writes to a file
-        // TODO : CHANGE IMPORTS TO INCLUDE A PROPER LOGGER
-        // logger.debug("debug test message from slf4j");
-        // logger.info("info test message from slf4j");
-        // logger.error("error test logger name=" + logger.getName());
-        // logger.trace("trace test message from slf4j");
-
-        Log.e(this.getClass().getSimpleName(), "init() called");
-
-        // passing this context to the service for sharedPrefs
-        Log.e(this.getClass().getSimpleName(), "setting context for accessing shared prefs");
+        Log.e(this.getClass().getSimpleName(), "++++++++++++++++++++++++++++++++++++++++++++++++++.");
+        new SmsListener();
+        Log.e(this.getClass().getSimpleName(), "++++++++++++++++++++++++++++++++++++++++++++++++++.");
         service = RulesService.getInstance();
         service.setContext(getApplicationContext());
-
-        // tester clear DB
-        // service.clearSharedPrefs();
-        // Log.e(this.getClass().getSimpleName(), "clearing db.");
-
-        // create sample sharedPrefs, will be created only once
-        service.createShredPrefs();
-        service.printSharedPrefs();
-        service.buildRulesMapFromSharedPrefs();
-
-        //service.buildRulesMapFromSharedPrefs();
-        //Log.e(this.getClass().getSimpleName(), "done building rules");
-
-        // get the rules to pass to listener
-        rules = service.getRules();
-
-        // fill table with adapter that is bound to the rules values collection
-        refreshRulesListView();
-
-        // creates SmsListener with that Map of rules
-        Log.e(getClass().getSimpleName(), "starting sms listener with : " + rules.size() + " deployed rules.");
-        listener = new SmsListener();
-        listener.setRules(rules);
+        if (!service.isEnabled()){
+            Log.e(this.getClass().getSimpleName(), "init() called when service not enabled");
+            service.createShredPrefs();
+            service.printSharedPrefs();
+            service.buildRulesMapFromSharedPrefs();
+            service.startService();
+            Log.e(this.getClass().getSimpleName(), "service started.");
+        }else {
+            Log.e(this.getClass().getSimpleName(), "init() called when service is running, noop.");
+        }
     }
 
     @Override
@@ -102,19 +76,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e(this.getClass().getSimpleName(), "onCreate() called");
+        //Log.e(this.getClass().getSimpleName(), "onCreate() called");
         setContentView(R.layout.activity_main);
 
         init();
+        refreshRulesListView();
         // disable keyboard on startapp
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        Button btn_refresh = (Button) findViewById(R.id.btnRefresh);
-        btn_refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refreshRulesListView();
-            }
-        });
 
         Button btn_status = (Button) findViewById(R.id.btnStatus);
         btn_status.setOnClickListener(new View.OnClickListener() {
@@ -125,15 +93,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_delete = (Button) findViewById(R.id.btnDelete);
-        btn_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Logger.deleteLogfile();
-                Toast.makeText(MainActivity.this, "Logfile deleted.",Toast.LENGTH_LONG).show();
-                Log.e(this.getClass().getSimpleName(), "logfile deleted.");
-            }
-        });
+//        Button btn_delete = (Button) findViewById(R.id.btnDelete);
+//        btn_delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Logger.deleteLogfile();
+//                Toast.makeText(MainActivity.this, "Logfile deleted.",Toast.LENGTH_SHORT).show();
+//                Log.e(this.getClass().getSimpleName(), "logfile deleted.");
+//            }
+//        });
 
         Button btn_log = (Button) findViewById(R.id.btnLog);
         btn_log.setOnClickListener(new View.OnClickListener() {
@@ -144,25 +112,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_email = (Button) findViewById(R.id.btnSendEmail);
-        btn_email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // log file attachment
-                File logs_dir = new File(Environment.getExternalStorageDirectory(), LOG_DIRECTORY);
-                File file = new File(logs_dir, LOG_FILENAME);
-                ArrayList<Uri> uris = new ArrayList<Uri>();
-                uris.add(Uri.fromFile(file));
-
-                final Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-                emailIntent.setType("plain/text");
-                //emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"chenchuk@gmaqil.com@somewhere.nodomain"});
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, MANAGERS);
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "That one works");
-                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
-                startActivityForResult(Intent.createChooser(emailIntent, "Sending multiple attachment"), 12345);
-            }
-        });
+//        Button btn_email = (Button) findViewById(R.id.btnSendEmail);
+//        btn_email.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // log file attachment
+//                File logs_dir = new File(Environment.getExternalStorageDirectory(), LOG_DIRECTORY);
+//                File file = new File(logs_dir, LOG_FILENAME);
+//                ArrayList<Uri> uris = new ArrayList<Uri>();
+//                uris.add(Uri.fromFile(file));
+//
+//                final Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+//                emailIntent.setType("plain/text");
+//                //emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"chenchuk@gmaqil.com@somewhere.nodomain"});
+//                emailIntent.putExtra(Intent.EXTRA_EMAIL, MANAGERS);
+//                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "That one works");
+//                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+//                startActivityForResult(Intent.createChooser(emailIntent, "Sending multiple attachment"), 12345);
+//            }
+//        });
 
         Button btn_console = (Button) findViewById(R.id.btnConsole);
         btn_console.setOnClickListener(new View.OnClickListener() {
@@ -183,11 +151,7 @@ public class MainActivity extends AppCompatActivity {
             deployedRulesAsStrings[i] = rulesArray[i].toString();
         }
 
-//        adapter = new ArrayAdapter<String>(this,
-//                     android.R.layout.simple_list_item_1, deployedRulesAsStrings);
-
         adapter = new RulesArrayAdapter<String>(this,deployedRulesAsStrings);
-
         // attach adapter to listview
         final ListView lvRules = (ListView) findViewById(R.id.lvRules);
         lvRules.setAdapter(adapter);
@@ -201,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(ruleEditorIntent);
             }
         });
-        Toast.makeText(MainActivity.this, "Rules refreshed.",Toast.LENGTH_LONG).show();
+        //Toast.makeText(MainActivity.this, "Rules refreshed.",Toast.LENGTH_SHORT).show();
 
     }
 }
