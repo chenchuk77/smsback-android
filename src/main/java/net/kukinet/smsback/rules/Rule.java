@@ -6,6 +6,9 @@ import com.google.gson.Gson;
 
 import net.kukinet.smsback.core.SimpleSms;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by chenchuk on 1/24/2016.
  */
@@ -36,7 +39,7 @@ public class Rule {
 
         Boolean shouldMatchAddress = !matchAddress.equals("-") ;
         Boolean shouldMatchContent = !matchContent.equals("-") ;
-        Boolean shouldAddTimestamp = addTimestamp.equals("+") ;
+        Boolean shouldAddTimestamp = addTimestamp.equals("+") || addTimestamp.equals("++") ;
         Boolean shouldSendSameContent = replaceContent.equals("-") ;
 
         String desc = "If incoming sms ";
@@ -51,7 +54,15 @@ public class Rule {
         desc += ", i will send ";
         String contentToSend = (shouldSendSameContent ? "the same content ": "'" +replaceContent +"' ") ;
         desc += contentToSend;
-        desc += (shouldAddTimestamp) ? "with timestamp ": "";
+
+        if(shouldAddTimestamp){
+            if(addTimestamp.equals("+")) {
+                desc += (shouldAddTimestamp) ? "with epoch timestamp ": "";
+            }
+            if(addTimestamp.equals("++")) {
+                desc += (shouldAddTimestamp) ? "with date timestamp ": "";
+            }
+        }
         desc += "to " + replyTo + ".";
         return desc;
     }
@@ -70,16 +81,26 @@ public class Rule {
         String content = replaceContent.equals("-") ? sms.getContent() : replaceContent;
         // append epoch timestamp
         if (addTimestamp.equals("+")) {
-            content = content + ":" + System.currentTimeMillis()/1000;
+            content = System.currentTimeMillis()/1000 + "-" + content;
         }
+        if (addTimestamp.equals("++")) {
+            // TODO: check
+            content = Epoch2DateString(System.currentTimeMillis(), "yyyy:MM:dd:hh:mm:ss") + "-" + content;
+        }
+
         SimpleSms smsReply = new SimpleSms()
                                 .setRecipientAddress(replyTo)
                                 .setContent(content);
         return smsReply;
     }
+    public static String Epoch2DateString(long epochMsec, String formatString) {
+        Date updatedate = new Date(epochMsec);
+        SimpleDateFormat format = new SimpleDateFormat(formatString);
+        return format.format(updatedate);
+    }
 
 
-
+    public Rule(){};
 
     // c'tor for json object
     public Rule (String jsonRule){

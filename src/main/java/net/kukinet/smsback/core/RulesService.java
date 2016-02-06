@@ -31,7 +31,8 @@ public class RulesService {
     private static int counterUnMatchedSms = 0;
     private static int counterCmdSms= 0;
     private static int counterBinarySms= 0;
-    //List<Operator> operators = null;
+
+    private Boolean enabled = true;
 
     // need to access shared-prefs
     private Context context;
@@ -53,6 +54,19 @@ public class RulesService {
     public void increaseCounterCmdSms(){counterCmdSms++;}
     public int getCounterBinarySms() {return counterBinarySms;}
     public void increaseCounterBinarySms(){counterBinarySms++;}
+
+    public void enableService(){
+        this.enabled = true;
+        Log.e(getClass().getSimpleName(), "service status changed to enabled.");
+
+    }
+    public void disableService(){
+        this.enabled = false;
+        Log.e(getClass().getSimpleName(), "service status changed to disabled.");
+    }
+    public Boolean isEnabled(){
+        return this.enabled;
+    }
 
     //public List<Operator> getOperators() { return operators;}
     //public void setOperators(List<Operator> operators) {this.operators = operators;}

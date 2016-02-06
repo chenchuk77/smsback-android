@@ -77,6 +77,19 @@
         android:textStyle="bold"/>
     <!--android:layout_alignBottom="@+id/btnExec"-->
 
+    <Button
+        android:text="Status"
+        android:id="@+id/btnStatus"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSendEmail"
+        android:background="@drawable/button_shape"
+        android:layout_toLeftOf="@id/btnLog"
+        android:textColor="#000"
+        android:layout_margin="3dp"
+        android:textStyle="bold"/>
+
+
     <ImageButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

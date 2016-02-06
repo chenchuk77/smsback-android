@@ -116,17 +116,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        Button btn_exec = (Button) findViewById(R.id.btnExec);
-//        btn_exec.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String command = ((EditText) findViewById(R.id.etCommand)).getText().toString();
-//                service.execCommand(command);
-//                refreshRulesListView();
-//                Log.e(this.getClass().getSimpleName(), "rules loaded: " + service.getRules().toString());
-//
-//            }
-//        });
+        Button btn_status = (Button) findViewById(R.id.btnStatus);
+        btn_status.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent statusIntent = new Intent(MainActivity.this, StatusActivity.class);
+                startActivity(statusIntent);
+            }
+        });
 
         Button btn_delete = (Button) findViewById(R.id.btnDelete);
         btn_delete.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
                 Logger.deleteLogfile();
                 Toast.makeText(MainActivity.this, "Logfile deleted.",Toast.LENGTH_LONG).show();
                 Log.e(this.getClass().getSimpleName(), "logfile deleted.");
-
             }
         });
 
@@ -177,8 +173,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     public void refreshRulesListView(){
@@ -188,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0 ; i<rulesArray.length ; i++){
             deployedRulesAsStrings[i] = rulesArray[i].toString();
         }
+
 //        adapter = new ArrayAdapter<String>(this,
 //                     android.R.layout.simple_list_item_1, deployedRulesAsStrings);
 

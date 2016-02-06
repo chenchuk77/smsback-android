@@ -9,6 +9,8 @@ public class Log {
     // to the original Log.e
     public static void e(String tag, String message){
         Logger.getLogger().debug(message);
+
+        // debugging on android studio console
         android.util.Log.e("", message);
     }
 }
