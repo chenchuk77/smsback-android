@@ -56,4 +56,13 @@ tools:context="${packageName}.${activityClass}" >
         android:background="@drawable/smsback_main2"
         android:id="@+id/imageButton" />
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvCommands"
+        android:layout_below="@+id/btnHelp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/imageButton" />
+
 </RelativeLayout>
